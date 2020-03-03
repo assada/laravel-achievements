@@ -5,8 +5,8 @@ namespace Gstt\Achievements;
 
 use Gstt\Achievements\Model\AchievementDetails;
 use Gstt\Achievements\Model\AchievementProgress;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait EntityRelationsAchievements
@@ -18,9 +18,9 @@ trait EntityRelationsAchievements
     /**
      * Get the entity's Achievements
      *
-     * @return Builder
+     * @return MorphMany
      */
-    public function achievements(): Builder
+    public function achievements(): MorphMany
     {
         if (config('achievements.locked_sync')) {
             $this->syncAchievements();

@@ -33,7 +33,7 @@ Hard fork of An implementation of an Achievement System in Laravel, inspired by 
 Default installation is via [Composer](https://getcomposer.org/).
 
 ```
-composer require gstt/laravel-achievements
+composer require assada/laravel-achievements
 ```
 
 The service provider will automatically get registered. Or you could add the Service Provider manually to your

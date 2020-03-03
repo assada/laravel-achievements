@@ -59,9 +59,9 @@ class AchievementDetails extends Model
     /**
      * Returns the class that defined this achievement.
      *
-     * @return string
+     * @return object
      */
-    public function getClass(): string
+    public function getClass(): object
     {
         return new $this->class_name();
     }
