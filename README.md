@@ -3,14 +3,14 @@
 </p>
 
 <p align="center">
-<a href="https://travis-ci.org/gstt/laravel-achievements"><img src="https://travis-ci.org/gstt/laravel-achievements.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/gstt/laravel-achievements"><img src="https://poser.pugx.org/gstt/laravel-achievements/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/gstt/laravel-achievements"><img src="https://poser.pugx.org/gstt/laravel-achievements/license.svg" alt="License"></a>
+<a href="https://travis-ci.org/assada/laravel-achievements"><img src="https://travis-ci.org/assada/laravel-achievements.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/assada/laravel-achievements"><img src="https://poser.pugx.org/assada/laravel-achievements/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/assada/laravel-achievements"><img src="https://poser.pugx.org/assada/laravel-achievements/license.svg" alt="License"></a>
 </p>
 
 <a href="https://github.com/gstt/laravel-achievements/">Original package</a>
 
-Hard fork of An implementation of an Achievement System in Laravel, inspired by Laravel's Notification system.
+An implementation of an Achievement System in Laravel, inspired by Laravel's Notification system.
 
 ## Table of Contents
 1. [Requirements](#requirements)
