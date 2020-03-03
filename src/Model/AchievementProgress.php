@@ -1,11 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace Gstt\Achievements\Model;
 
 use Carbon\Carbon;
+use Exception;
+use Gstt\Achievements\Achievement;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Config;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Model for the table that will store the data regarding achievement progress and unlocks.
@@ -32,6 +37,10 @@ class AchievementProgress extends Model
      */
     protected $table = 'achievement_progress';
 
+    /**
+     * AchievementProgress constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $this->table = Config::get('achievements.table_names.progress');
@@ -57,19 +66,21 @@ class AchievementProgress extends Model
     /**
      * Get the notifiable entity that the achievement progress belongs to.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return MorphTo
      */
-    public function achiever()
+    public function achiever(): MorphTo
     {
         return $this->morphTo();
     }
 
     /**
      * Get the achievement details.
+     *
+     * @return BelongsTo
      */
-    public function details()
+    public function details(): BelongsTo
     {
-        return $this->belongsto('Gstt\Achievements\Model\AchievementDetails', 'achievement_id');
+        return $this->belongsto(AchievementDetails::class, 'achievement_id');
     }
 
     /**
@@ -77,7 +88,7 @@ class AchievementProgress extends Model
      *
      * @return bool
      */
-    public function isUnlocked()
+    public function isUnlocked(): bool
     {
         if (!is_null($this->unlockedAt)) {
             return true;
@@ -93,7 +104,7 @@ class AchievementProgress extends Model
      *
      * @return bool
      */
-    public function isLocked()
+    public function isLocked(): bool
     {
         return !$this->isUnlocked();
     }
@@ -101,17 +112,20 @@ class AchievementProgress extends Model
     /**
      * Overloads save method.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return bool
+     * @throws Exception
+     * @throws Exception
      */
-    public function save(array $options = [])
+    public function save(array $options = []): bool
     {
         if (is_null($this->id)) {
             $this->id = Uuid::uuid4()->toString();
         }
-        $recently_unlocked = false;
+        $recentlyUnlocked = false;
         if (is_null($this->unlockedAt) && $this->isUnlocked()) {
-            $recently_unlocked = true;
+            $recentlyUnlocked = true;
             $this->points = $this->details->points;
             $this->unlocked_at = Carbon::now();
         }
@@ -119,9 +133,10 @@ class AchievementProgress extends Model
         $result = parent::save($options);
 
         // Gets the achievement class for this progress
+        /** @var Achievement $class */
         $class = $this->details->getClass();
 
-        if ($recently_unlocked) {
+        if ($recentlyUnlocked) {
             // Runs the callback set to run when the achievement is unlocked.
             $class->triggerUnlocked($this);
         } elseif ($this->points >= 0) {
@@ -134,18 +149,20 @@ class AchievementProgress extends Model
 
     /**
      * Maps to Gstt\Achievements\Achievement::$name
+     *
      * @return string
      */
-    public function getNameAttribute()
+    public function getNameAttribute(): string
     {
         return $this->details->name;
     }
 
     /**
      * Maps to Gstt\Achievements\Achievement::$description
+     *
      * @return string
      */
-    public function getDescriptionAttribute()
+    public function getDescriptionAttribute(): string
     {
         return $this->details->description;
     }

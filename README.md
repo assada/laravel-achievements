@@ -8,7 +8,9 @@
 <a href="https://packagist.org/packages/gstt/laravel-achievements"><img src="https://poser.pugx.org/gstt/laravel-achievements/license.svg" alt="License"></a>
 </p>
 
-An implementation of an Achievement System in Laravel, inspired by Laravel's Notification system. 
+<a href="https://github.com/gstt/laravel-achievements/">Original package</a>
+
+Hard fork of An implementation of an Achievement System in Laravel, inspired by Laravel's Notification system.
 
 ## Table of Contents
 1. [Requirements](#requirements)
@@ -23,10 +25,10 @@ An implementation of an Achievement System in Laravel, inspired by Laravel's Not
 
 ## <a name="requirements"></a> Requirements
 
-- Laravel 5.3 or higher
-- PHP 5.6 or higher
+- Laravel 6 or higher
+- PHP 7.2 or higher
 
-## <a name="installation"></a> Installation 
+## <a name="installation"></a> Installation
 
 Default installation is via [Composer](https://getcomposer.org/).
 
@@ -34,7 +36,8 @@ Default installation is via [Composer](https://getcomposer.org/).
 composer require gstt/laravel-achievements
 ```
 
-Add the Service Provider to your `config/app` file in the `providers` section.
+The service provider will automatically get registered. Or you could add the Service Provider manually to your
+`config/app` file in the `providers` section.
 
 ```php
 'providers' => [
@@ -48,15 +51,15 @@ Backup your database and run the migrations in order to setup the required table
 php artisan migrate
 ```
 
-## <a name="creating"></a> Creating Achievements 
-Similar to Laravel's implementation of [Notifications](https://laravel.com/docs/5.4/notifications), each Achievement is 
-represented by a single class (typically stored in the `app\Achievements` directory.) This directory will be created 
+## <a name="creating"></a> Creating Achievements
+Similar to Laravel's implementation of [Notifications](https://laravel.com/docs/5.4/notifications), each Achievement is
+represented by a single class (typically stored in the `app\Achievements` directory.) This directory will be created
 automatically for you when you run the `make:achievement` command.
 
 ```
 php artisan make:achievement UserMadeAPost
 ```
-This command will put a fresh Achievement in your `app/Achievements` directory with only has two properties defined: 
+This command will put a fresh Achievement in your `app/Achievements` directory with only has two properties defined:
 `name` and `description`. You should change the default values for these properties to something that better explains
 what the Achievement is and how to unlock it. When you're done, it should look like this:
 
@@ -81,7 +84,7 @@ class UserMadeAPost extends Achievement
 }
 ```
 
-## <a name="unlocking"></a> Unlocking Achievements 
+## <a name="unlocking"></a> Unlocking Achievements
 Achievements can be unlocked by using the `Achiever` trait.
 
 ```php
@@ -97,7 +100,7 @@ class User extends Authenticatable
     use Achiever;
 }
 ```
-This trait contains the `unlock` method, that can be used to unlock an Achievement. The `unlock` method expects an 
+This trait contains the `unlock` method, that can be used to unlock an Achievement. The `unlock` method expects an
 `Achievement` instance:
 
 ```php
@@ -110,7 +113,7 @@ unlock Achievements.
 
 ## <a name="progress"></a> Adding Progress
 
-Instead of directly unlocking an achievement, you can add a progress to it. For example, you may have an achievement 
+Instead of directly unlocking an achievement, you can add a progress to it. For example, you may have an achievement
 `UserMade10Posts` and you want to keep track of how the user is progressing on this Achievement.
 
 In order to do that, you must set an additional parameter on your `UserMade10Posts` class, called `$points`:
@@ -133,14 +136,14 @@ class UserMade10Posts extends Achievement
      * A small description for the achievement
      */
     public $description = "Wow! You have already created 10 posts!";
-    
+
     /*
      * The amount of "points" this user need to obtain in order to complete this achievement
      */
     public $points = 10;
 }
 ```
-You may now control the progress by the methods `addProgress` and `removeProgress` on the `Achiever` trait. 
+You may now control the progress by the methods `addProgress` and `removeProgress` on the `Achiever` trait.
 Both methods expect an `Achievement` instance and an amount of points to add or remove:
 
 ```php
@@ -149,7 +152,7 @@ use App\Achievements\UserMade10Posts;
 $user->addProgress(new UserMade10Posts(), 1); // Adds 1 point of progress to the UserMade10Posts achievement
 ```
 
-In addition, you can use the methods `resetProgress` to set the progress back to 0 and `setProgress` to set it to a 
+In addition, you can use the methods `resetProgress` to set the progress back to 0 and `setProgress` to set it to a
 specified amount of points:
 
 ```php
@@ -191,10 +194,10 @@ There are also three additional helpers on the `Achiever` trait: `lockedAchievem
 ## <a name="listening"></a> Event Listeners
 
 ### Listening to all Achievements
-Laravel Achievements provides two events that can be listened to in order to provide "Achievement Unlocked" messages or similar. Both events receive the instance of `AchievementProgress` that triggered them. 
+Laravel Achievements provides two events that can be listened to in order to provide "Achievement Unlocked" messages or similar. Both events receive the instance of `AchievementProgress` that triggered them.
 
 The `Gstt\Achievements\Event\Progress` event triggers whenever an Achiever makes progress, but doesn't unlock an Achievement. The `Gstt\Achievements\Event\Unlocked` event triggers whenever an Achiever actually unlocks an achievement.
- 
+
 Details on how to listen to those events are explained on [Laravel's Event documentation](https://laravel.com/docs/5.3/events).
 
 ### Listening to specific Achievements
@@ -219,29 +222,29 @@ class UserMade50Posts extends Achievement
      * A small description for the achievement
      */
     public $description = "Wow! You have already created 50 posts!";
-    
+
     /*
      * The amount of "points" this user need to obtain in order to complete this achievement
      */
     public $points = 50;
-    
+
     /*
      * Triggers whenever an Achiever makes progress on this achievement
     */
     public function whenProgress($progress)
     {
-        
+
     }
-    
+
     /*
      * Triggers whenever an Achiever unlocks this achievement
     */
     public function whenUnlocked($progress)
     {
-        
+
     }
 }
 ```
-## <a name="license"></a> License 
+## <a name="license"></a> License
 
 Laravel Achievements is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).

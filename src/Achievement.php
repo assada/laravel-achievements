@@ -1,16 +1,21 @@
 <?php
+declare(strict_types=1);
 
 namespace Gstt\Achievements;
 
-use Gstt\Achievements\Event\Unlocked as UnlockedEvent;
 use Gstt\Achievements\Event\Progress as ProgressEvent;
+use Gstt\Achievements\Event\Unlocked as UnlockedEvent;
 use Gstt\Achievements\Model\AchievementDetails;
 use Gstt\Achievements\Model\AchievementProgress;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Achievement
+ *
+ * @package Gstt\Achievements
+ */
 abstract class Achievement implements CanAchieve
 {
-
     /**
      * The unique identifier for the achievement.
      *
@@ -21,12 +26,12 @@ abstract class Achievement implements CanAchieve
     /*
      * The achievement name
      */
-    public $name = "Achievement";
+    public $name = 'Achievement';
 
     /*
      * A small description for the achievement
      */
-    public $description = "";
+    public $description = '';
 
     /**
      * The amount of points required to unlock this achievement.
@@ -56,7 +61,8 @@ abstract class Achievement implements CanAchieve
      * Wrapper for AchievementDetail::all();
      * Conveniently fetches all achievements stored in the database.
      */
-    public static function all(){
+    public static function all()
+    {
         return AchievementDetails::all();
     }
 
@@ -65,7 +71,7 @@ abstract class Achievement implements CanAchieve
      *
      * @return string
      */
-    public function getClassName()
+    public function getClassName(): string
     {
         return static::class;
     }
@@ -75,7 +81,7 @@ abstract class Achievement implements CanAchieve
      *
      * @return int
      */
-    public function getPoints()
+    public function getPoints(): int
     {
         return $this->points;
     }
@@ -85,9 +91,9 @@ abstract class Achievement implements CanAchieve
      *
      * @return AchievementDetails
      */
-    public function getModel()
+    public function getModel(): AchievementDetails
     {
-        if(!is_null($this->modelAttr)){
+        if (!is_null($this->modelAttr)) {
             return $this->modelAttr;
         }
 
@@ -98,7 +104,7 @@ abstract class Achievement implements CanAchieve
             $model->class_name = $this->getClassName();
         }
 
-        if(config('achievements.auto_sync') || is_null($model->name)) {
+        if (config('achievements.auto_sync') || is_null($model->name)) {
             $model->name = $this->name;
             $model->description = $this->description;
             $model->points = $this->points;
@@ -116,13 +122,13 @@ abstract class Achievement implements CanAchieve
      * Adds a specified amount of points to the achievement.
      *
      * @param mixed $achiever The entity that will add progress to this achievement
-     * @param int   $points   The amount of points to be added to this achievement
+     * @param int $points The amount of points to be added to this achievement
      */
-    public function addProgressToAchiever($achiever, $points = 1)
+    public function addProgressToAchiever($achiever, $points = 1): void
     {
         $progress = $this->getOrCreateProgressForAchiever($achiever);
         if (!$progress->isUnlocked()) {
-            $progress->points = $progress->points + $points;
+            $progress->points += $points;
             $progress->save();
         }
     }
@@ -131,9 +137,9 @@ abstract class Achievement implements CanAchieve
      * Sets a specified amount of points to the achievement.
      *
      * @param mixed $achiever The entity that will add progress to this achievement
-     * @param int   $points   The amount of points to be added to this achievement
+     * @param int $points The amount of points to be added to this achievement
      */
-    public function setProgressToAchiever($achiever, $points)
+    public function setProgressToAchiever($achiever, $points): void
     {
         $progress = $this->getOrCreateProgressForAchiever($achiever);
 
@@ -145,19 +151,19 @@ abstract class Achievement implements CanAchieve
 
     /**
      * Gets the achiever's progress data for this achievement, or creates a new one if not existant
-     * @param \Illuminate\Database\Eloquent\Model $achiever
+     * @param Model $achiever
      *
      * @return AchievementProgress
      */
-    public function getOrCreateProgressForAchiever($achiever)
+    public function getOrCreateProgressForAchiever($achiever): AchievementProgress
     {
         $className = $this->getAchieverClassName($achiever);
 
         $achievementId = $this->getModel()->id;
         $progress = AchievementProgress::where('achiever_type', $className)
-                                       ->where('achievement_id', $achievementId)
-                                       ->where('achiever_id', $achiever->id)
-                                       ->first();
+            ->where('achievement_id', $achievementId)
+            ->where('achiever_id', $achiever->getKey())
+            ->first();
 
         if (is_null($progress)) {
             $progress = new AchievementProgress();
@@ -173,12 +179,12 @@ abstract class Achievement implements CanAchieve
     /**
      * Gets model morph name
      *
-     * @param \Illuminate\Database\Eloquent\Model $achiever
+     * @param Model $achiever
      * @return string
      */
-    protected function getAchieverClassName($achiever)
+    protected function getAchieverClassName($achiever): string
     {
-        if ($achiever instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($achiever instanceof Model) {
             return $achiever->getMorphClass();
         }
 
@@ -208,7 +214,7 @@ abstract class Achievement implements CanAchieve
      *
      * @param $progress
      */
-    public function triggerUnlocked($progress)
+    public function triggerUnlocked($progress): void
     {
         event(new UnlockedEvent($progress));
         $this->whenUnlocked($progress);
@@ -219,7 +225,7 @@ abstract class Achievement implements CanAchieve
      *
      * @param $progress
      */
-    public function triggerProgress($progress)
+    public function triggerProgress($progress): void
     {
         event(new ProgressEvent($progress));
         $this->whenProgress($progress);

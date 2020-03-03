@@ -1,9 +1,13 @@
 <?php
-/**
- * @author Gabriel Simonetti
- */
+declare(strict_types=1);
+
 namespace Gstt\Achievements;
 
+/**
+ * Interface CanAchieve
+ *
+ * @package Gstt\Achievements
+ */
 interface CanAchieve
 {
     // Adds an specified amount of points of progress

@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Gstt\Achievements\Model;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 
 /**
@@ -18,8 +20,16 @@ use Illuminate\Support\Facades\Config;
 class AchievementDetails extends Model
 {
     public $secret = false;
+
+    /**
+     * @var string
+     */
     protected $table = 'achievement_details';
 
+    /**
+     * AchievementDetails constructor.
+     * @param array $attributes
+     */
     public function __construct(array $attributes = [])
     {
         $this->table = Config::get('achievements.table_names.details');
@@ -29,11 +39,11 @@ class AchievementDetails extends Model
     /**
      * Return all users that have made progress on this achievement.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function progress()
+    public function progress(): HasMany
     {
-        return $this->hasMany('Gstt\Achievements\Model\AchievementProgress', 'achievement_id');
+        return $this->hasMany(AchievementProgress::class, 'achievement_id');
     }
 
     /**
@@ -41,15 +51,17 @@ class AchievementDetails extends Model
      *
      * @return Collection
      */
-    public function unlocks()
+    public function unlocks(): Collection
     {
         return $this->progress()->whereNotNull('unlocked_at')->get();
     }
 
     /**
      * Returns the class that defined this achievement.
+     *
+     * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return new $this->class_name();
     }
@@ -57,17 +69,21 @@ class AchievementDetails extends Model
     /**
      * Gets all AchievementDetails that have no correspondence on the Progress table.
      *
-     * @param \Illuminate\Database\Eloquent\Model $achiever
+     * @param Model $achiever
+     *
+     * @return
      */
     public static function getUnsyncedByAchiever($achiever)
     {
         $className = (new static)->getAchieverClassName($achiever);
 
         $achievements = AchievementProgress::where('achiever_type', $className)
-                                           ->where('achiever_id', $achiever->id)->get();
-        $synced_ids = $achievements->map(function ($el) {
-            return $el->achievement_id;
-        })->toArray();
+            ->where('achiever_id', $achiever->id)->get();
+        $synced_ids = $achievements->map(
+            static function ($el) {
+                return $el->achievement_id;
+            }
+        )->toArray();
 
         return self::whereNotIn('id', $synced_ids);
     }
@@ -75,12 +91,13 @@ class AchievementDetails extends Model
     /**
      * Gets model morph name
      *
-     * @param \Illuminate\Database\Eloquent\Model $achiever
+     * @param Model $achiever
+     *
      * @return string
      */
-    protected function getAchieverClassName($achiever)
+    protected function getAchieverClassName($achiever): string
     {
-        if ($achiever instanceof \Illuminate\Database\Eloquent\Model) {
+        if ($achiever instanceof Model) {
             return $achiever->getMorphClass();
         }
 

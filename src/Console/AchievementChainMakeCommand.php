@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Gstt\Achievements\Console;
 
@@ -43,7 +44,7 @@ class AchievementChainMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__.'/stubs/achievement_chain_class.stub';
+        return __DIR__ . '/stubs/achievement_chain_class.stub';
     }
 
     /**
@@ -55,6 +56,6 @@ class AchievementChainMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Achievements';
+        return $rootNamespace . '\Achievements';
     }
 }

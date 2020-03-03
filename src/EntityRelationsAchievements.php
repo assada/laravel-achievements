@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Gabriel Simonetti
- * Date: 18/02/2017
- * Time: 21:03
- */
+declare(strict_types=1);
 
 namespace Gstt\Achievements;
 
@@ -13,6 +8,11 @@ use Gstt\Achievements\Model\AchievementProgress;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Trait EntityRelationsAchievements
+ *
+ * @package Gstt\Achievements
+ */
 trait EntityRelationsAchievements
 {
     /**
@@ -20,7 +20,7 @@ trait EntityRelationsAchievements
      *
      * @return Builder
      */
-    public function achievements()
+    public function achievements(): Builder
     {
         if (config('achievements.locked_sync')) {
             $this->syncAchievements();
@@ -32,25 +32,23 @@ trait EntityRelationsAchievements
     /**
      * Retrieves the status for the specified achievement
      * @param Achievement $achievement
-     * @return AchievementProgress
+     * @return null|AchievementProgress
      */
-    public function achievementStatus(Achievement $achievement)
+    public function achievementStatus(Achievement $achievement): ?AchievementProgress
     {
         return $this->achievements()->where('achievement_id', $achievement->getModel()->id)->first();
     }
 
     /**
      * Return true if the user has unlocked this achievement, false otherwise.
-     * @param  Achievement $achievement
+     * @param Achievement $achievement
      * @return bool
      */
-    public function hasUnlocked(Achievement $achievement)
+    public function hasUnlocked(Achievement $achievement): bool
     {
         $status = $this->achievementStatus($achievement);
-        if (is_null($status) || is_null($status->unlocked_at)) {
-            return false;
-        }
-        return true;
+
+        return !(null === $status || null === $status->unlocked_at);
     }
 
     /**
@@ -58,7 +56,7 @@ trait EntityRelationsAchievements
      *
      * @return Collection
      */
-    public function inProgressAchievements()
+    public function inProgressAchievements(): Collection
     {
         return $this->achievements()->whereNull('unlocked_at')->where('points', '>', 0)->get();
     }
@@ -68,55 +66,56 @@ trait EntityRelationsAchievements
      *
      * @return Collection
      */
-    public function unlockedAchievements()
+    public function unlockedAchievements(): Collection
     {
         return $this->achievements()->whereNotNull('unlocked_at')->get();
     }
 
     /**
      * Get the entity's locked achievements.
+     * @return Collection
      */
-    public function lockedAchievements()
+    public function lockedAchievements(): Collection
     {
         if (config('achievements.locked_sync')) {
             // Relationships should be synced. Just return relationship data.
             return $this->achievements()->whereNull('unlocked_at')->get();
         } else {
-            // Query all unsynced
-            $unsynced = AchievementDetails::getUnsyncedByAchiever($this)->get();
-            $self = $this;
-            $unsynced = $unsynced->map(function ($el) use ($self) {
-                $progress = new AchievementProgress();
-                $progress->details()->associate($el);
-                $progress->achiever()->associate($this);
-                $progress->points = 0;
-                $progress->created_at = null;
-                $progress->updated_at = null;
-                return $progress;
-            });
+            // Query all unSynced
+            $unSynced = AchievementDetails::getUnsyncedByAchiever($this)->get();
+            $unSynced = $unSynced->map(
+                function ($el) {
+                    $progress = new AchievementProgress();
+                    $progress->details()->associate($el);
+                    $progress->achiever()->associate($this);
+                    $progress->points = 0;
+                    $progress->created_at = null;
+                    $progress->updated_at = null;
+                    return $progress;
+                }
+            );
 
             // Merge with progressed, but not yet unlocked
-            $lockedProgressed = $this->achievements()->whereNull('unlocked_at')->get();
-            $locked = $lockedProgressed->merge($unsynced);
 
-            return $locked;
+            return $this->achievements()->whereNull('unlocked_at')->get()->merge($unSynced);
         }
     }
 
     /**
      * Syncs achievement data.
      */
-    public function syncAchievements()
+    public function syncAchievements(): void
     {
         /** @var Collection $locked */
         $locked = AchievementDetails::getUnsyncedByAchiever($this);
-        $self = $this;
-        $locked->each(function ($el) use ($self) {
-            $progress = new AchievementProgress();
-            $progress->details()->associate($el);
-            $progress->achiever()->associate($this);
-            $progress->points = 0;
-            $progress->save();
-        });
+        $locked->each(
+            function ($el) {
+                $progress = new AchievementProgress();
+                $progress->details()->associate($el);
+                $progress->achiever()->associate($this);
+                $progress->points = 0;
+                $progress->save();
+            }
+        );
     }
 }
