@@ -1,13 +1,19 @@
 <?php
+declare(strict_types=1);
 
-namespace Gstt\Tests;
+namespace Assada\Tests;
 
-use Gstt\Tests\AchievementChains\PostChain;
-use Gstt\Tests\Achievements\FiftyPosts;
-use Gstt\Tests\Achievements\FirstPost;
-use Gstt\Tests\Achievements\TenPosts;
-use Gstt\Tests\Model\User;
+use Assada\Tests\AchievementChains\PostChain;
+use Assada\Tests\Achievements\FiftyPosts;
+use Assada\Tests\Achievements\FirstPost;
+use Assada\Tests\Achievements\TenPosts;
+use Assada\Tests\Model\User;
 
+/**
+ * Class ChainAchievementTest
+ *
+ * @package Assada\Tests
+ */
 class ChainAchievementTest extends DBTestCase
 {
     public $users;
@@ -16,7 +22,7 @@ class ChainAchievementTest extends DBTestCase
     public $tenPosts;
     public $fiftyPosts;
 
-    public function setUp():void
+    public function setUp(): void
     {
         parent::setUp();
         $this->users[] = User::find(1);
@@ -91,10 +97,19 @@ class ChainAchievementTest extends DBTestCase
         // Get the highest achievement on chain for each user.
 
         $this->assertEquals(null, $this->users[0]->highestOnAchievementChain($this->postChain));
-        $this->assertEquals($this->tenPosts->name, $this->users[1]->highestOnAchievementChain($this->postChain)->details->name);
+        $this->assertEquals(
+            $this->tenPosts->name,
+            $this->users[1]->highestOnAchievementChain($this->postChain)->details->name
+        );
         $this->assertEquals(null, $this->users[2]->highestOnAchievementChain($this->postChain));
-        $this->assertEquals($this->fiftyPosts->name, $this->users[3]->highestOnAchievementChain($this->postChain)->details->name);
-        $this->assertEquals($this->fiftyPosts->name, $this->users[4]->highestOnAchievementChain($this->postChain)->details->name);
+        $this->assertEquals(
+            $this->fiftyPosts->name,
+            $this->users[3]->highestOnAchievementChain($this->postChain)->details->name
+        );
+        $this->assertEquals(
+            $this->fiftyPosts->name,
+            $this->users[4]->highestOnAchievementChain($this->postChain)->details->name
+        );
 
         // Sets user[0] points to 15.
         // Sets user[1] points to 5.

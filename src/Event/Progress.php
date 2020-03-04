@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements\Event;
+namespace Assada\Achievements\Event;
 
-use Gstt\Achievements\Model\AchievementProgress;
+use Assada\Achievements\Model\AchievementProgress;
 use Illuminate\Queue\SerializesModels;
 
 /**
  * Class Progress
  *
- * @package Gstt\Achievements\Event
+ * @package Assada\Achievements\Event
  */
 class Progress
 {

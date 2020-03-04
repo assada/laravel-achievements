@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
-use Gstt\Achievements\Model\AchievementDetails;
-use Gstt\Achievements\Model\AchievementProgress;
+use Assada\Achievements\Model\AchievementDetails;
+use Assada\Achievements\Model\AchievementProgress;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * Trait EntityRelationsAchievements
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 trait EntityRelationsAchievements
 {

@@ -17,14 +17,14 @@
             "src/Migrations"
         ],
         "psr-4": {
-            "Gstt\\Achievements\\": "src/",
-            "Gstt\\Tests\\": "tests/"
+            "Assada\\Achievements\\": "src/",
+            "Assada\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Gstt\\Achievements\\AchievementsServiceProvider"
+                "Assada\\Achievements\\AchievementsServiceProvider"
             ]
         }
     },

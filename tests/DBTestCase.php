@@ -1,11 +1,18 @@
 <?php
+declare(strict_types=1);
 
-namespace Gstt\Tests;
+namespace Assada\Tests;
 
 use Illuminate\Foundation\Testing\TestCase;
 use Illuminate\Support\Facades\Artisan;
-use Gstt\Tests\Model\User;
+use Assada\Tests\Model\User;
+use Assada\Achievements\AchievementsServiceProvider;
 
+/**
+ * Class DBTestCase
+ *
+ * @package Assada\Tests
+ */
 class DBTestCase extends TestCase
 {
     /**
@@ -16,7 +23,7 @@ class DBTestCase extends TestCase
     public function createApplication()
     {
         $app = require __DIR__.'/../vendor/laravel/laravel/bootstrap/app.php';
-        $app->register('Gstt\Achievements\AchievementsServiceProvider');
+        $app->register(AchievementsServiceProvider::class);
         $app->make('Illuminate\Contracts\Console\Kernel')->bootstrap();
         return $app;
     }

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Tests\Model;
+namespace Assada\Tests\Model;
 
-use Gstt\Achievements\Achiever;
+use Assada\Achievements\Achiever;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class User
  *
- * @package Gstt\Tests\Model
+ * @package Assada\Tests\Model
  */
 class User extends Authenticatable
 {

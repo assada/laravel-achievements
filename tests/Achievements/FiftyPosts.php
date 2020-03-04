@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Tests\Achievements;
+namespace Assada\Tests\Achievements;
 
-use Gstt\Achievements\Achievement;
+use Assada\Achievements\Achievement;
 
 /**
  * Class FiftyPosts
  *
- * @package Gstt\Tests\Achievements
+ * @package Assada\Tests\Achievements
  */
 class FiftyPosts extends Achievement
 {

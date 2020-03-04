@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
-use Gstt\Achievements\Event\Progress as ProgressEvent;
-use Gstt\Achievements\Event\Unlocked as UnlockedEvent;
-use Gstt\Achievements\Model\AchievementDetails;
-use Gstt\Achievements\Model\AchievementProgress;
+use Assada\Achievements\Event\Progress as ProgressEvent;
+use Assada\Achievements\Event\Unlocked as UnlockedEvent;
+use Assada\Achievements\Model\AchievementDetails;
+use Assada\Achievements\Model\AchievementProgress;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Achievement
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 abstract class Achievement implements CanAchieve
 {

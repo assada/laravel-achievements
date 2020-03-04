@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
 /**
  * Interface CanAchieve
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 interface CanAchieve
 {

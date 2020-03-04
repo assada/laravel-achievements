@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements\Console;
+namespace Assada\Achievements\Console;
 
 use Illuminate\Console\GeneratorCommand;
 
@@ -9,10 +9,10 @@ use Illuminate\Console\GeneratorCommand;
  * Creates an achievement class stub.
  *
  * @category Command
- * @package  Gstt\Achievements\Command
+ * @package  Assada\Achievements\Command
  * @author   Gabriel Simonetti <simonettigo@gmail.com>
  * @license  MIT License
- * @link     https://github.com/gstt/laravel-achievements
+ * @link     https://github.com/assada/laravel-achievements
  */
 class AchievementMakeCommand extends GeneratorCommand
 {

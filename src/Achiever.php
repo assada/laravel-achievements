@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
 /**
  * Trait Achiever
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 trait Achiever
 {

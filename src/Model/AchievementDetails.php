@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements\Model;
+namespace Assada\Achievements\Model;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -12,10 +12,10 @@ use Illuminate\Support\Facades\Config;
  * Model for the table that will store the details for an Achievement Progress.
  *
  * @category Model
- * @package  Gstt\Achievements\Model
+ * @package  Assada\Achievements\Model
  * @author   Gabriel Simonetti <simonettigo@gmail.com>
  * @license  MIT License
- * @link     https://github.com/gstt/laravel-achievements
+ * @link     https://github.com/assada/laravel-achievements
  */
 class AchievementDetails extends Model
 {

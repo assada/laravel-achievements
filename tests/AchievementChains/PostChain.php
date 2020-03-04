@@ -1,17 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Tests\AchievementChains;
+namespace Assada\Tests\AchievementChains;
 
-use Gstt\Achievements\AchievementChain;
-use Gstt\Tests\Achievements\FiftyPosts;
-use Gstt\Tests\Achievements\FirstPost;
-use Gstt\Tests\Achievements\TenPosts;
+use Assada\Achievements\AchievementChain;
+use Assada\Tests\Achievements\FiftyPosts;
+use Assada\Tests\Achievements\FirstPost;
+use Assada\Tests\Achievements\TenPosts;
 
 /**
  * Class PostChain
  *
- * @package Gstt\Tests\AchievementChains
+ * @package Assada\Tests\AchievementChains
  */
 class PostChain extends AchievementChain
 {

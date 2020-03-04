@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
-use Gstt\Achievements\Console\AchievementChainMakeCommand;
-use Gstt\Achievements\Console\AchievementMakeCommand;
+use Assada\Achievements\Console\AchievementChainMakeCommand;
+use Assada\Achievements\Console\AchievementMakeCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**
  * Class AchievementsServiceProvider
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 class AchievementsServiceProvider extends ServiceProvider
 {
@@ -25,7 +25,7 @@ class AchievementsServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([AchievementMakeCommand::class, AchievementChainMakeCommand::class]);
         }
-        $this->app['Gstt\Achievements\Achievement'] = static function ($app) {
+        $this->app[Achievement::class] = static function ($app) {
             return $app['gstt.achievements.achievement'];
         };
         $this->publishes(

@@ -1,14 +1,20 @@
 <?php
+declare(strict_types=1);
 
-namespace Gstt\Tests;
+namespace Assada\Tests;
 
-use Gstt\Achievements\Achievement;
-use Gstt\Achievements\Model\AchievementDetails;
-use Gstt\Tests\Model\User;
-use Gstt\Tests\Achievements\FirstPost;
-use Gstt\Tests\Achievements\TenPosts;
+use Assada\Achievements\Achievement;
+use Assada\Achievements\Model\AchievementDetails;
+use Assada\Tests\Model\User;
+use Assada\Tests\Achievements\FirstPost;
+use Assada\Tests\Achievements\TenPosts;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
+/**
+ * Class AchievementTest
+ *
+ * @package Assada\Tests
+ */
 class AchievementTest extends DBTestCase
 {
     public $users;

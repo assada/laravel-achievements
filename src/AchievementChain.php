@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Gstt\Achievements;
+namespace Assada\Achievements;
 
-use Gstt\Achievements\Model\AchievementProgress;
+use Assada\Achievements\Model\AchievementProgress;
 
 /**
  * Class AchievementChain
  *
- * @package Gstt\Achievements
+ * @package Assada\Achievements
  */
 abstract class AchievementChain implements CanAchieve
 {
