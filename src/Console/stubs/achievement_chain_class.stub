@@ -1,9 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace DummyNamespace;
 
-use Assada\Achievements\Achievement;
+use Assada\Achievements\AchievementChain;
 
+/**
+ * Class Registered
+ *
+ * @package DummyNamespace
+ */
 class DummyClass extends AchievementChain
 {
     /*

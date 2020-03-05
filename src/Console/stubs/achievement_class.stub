@@ -1,18 +1,24 @@
 <?php
+declare(strict_types=1);
 
 namespace DummyNamespace;
 
 use Assada\Achievements\Achievement;
 
+/**
+ * Class Registered
+ *
+ * @package DummyNamespace
+ */
 class DummyClass extends Achievement
 {
     /*
      * The achievement name
      */
-    public $name = "DummyClass";
+    public $name = 'DummyClass';
 
     /*
      * A small description for the achievement
      */
-    public $description = "";
+    public $description = '';
 }
