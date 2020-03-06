@@ -5,6 +5,7 @@ namespace Assada\Achievements;
 
 use Assada\Achievements\Console\AchievementChainMakeCommand;
 use Assada\Achievements\Console\AchievementMakeCommand;
+use Assada\Achievements\Console\LoadAchievementsCommand;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -23,7 +24,13 @@ class AchievementsServiceProvider extends ServiceProvider
     {
         $this->loadMigrationsFrom(__DIR__ . '/Migrations');
         if ($this->app->runningInConsole()) {
-            $this->commands([AchievementMakeCommand::class, AchievementChainMakeCommand::class]);
+            $this->commands(
+                [
+                    AchievementMakeCommand::class,
+                    AchievementChainMakeCommand::class,
+                    LoadAchievementsCommand::class
+                ]
+            );
         }
         $this->app[Achievement::class] = static function ($app) {
             return $app['gstt.achievements.achievement'];
