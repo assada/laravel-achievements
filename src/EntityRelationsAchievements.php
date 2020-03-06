@@ -62,6 +62,16 @@ trait EntityRelationsAchievements
     }
 
     /**
+     * Get the entity's achievements not in progress.
+     *
+     * @return Collection
+     */
+    public function notInProgressAchievements(): Collection
+    {
+        return $this->achievements()->whereNull('unlocked_at')->where('points', '=', 0)->get();
+    }
+
+    /**
      * Get the entity's unlocked achievements.
      *
      * @return Collection
