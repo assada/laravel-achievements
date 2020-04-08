@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/lJVz2II.png" alt="Laravel Achievements Logo">
+    <img src="https://i.imgur.com/VZ3uLlJ.png" alt="Laravel Achievements Logo">
 </p>
 
 <p align="center">
@@ -7,8 +7,6 @@
 <a href="https://packagist.org/packages/assada/laravel-achievements"><img src="https://poser.pugx.org/assada/laravel-achievements/d/total.svg" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/assada/laravel-achievements"><img src="https://poser.pugx.org/assada/laravel-achievements/license.svg" alt="License"></a>
 </p>
-
-<a href="https://github.com/gstt/laravel-achievements/">Original package</a>
 
 An implementation of an Achievement System in Laravel, inspired by Laravel's Notification system.
 
@@ -36,7 +34,7 @@ An implementation of an Achievement System in Laravel, inspired by Laravel's Not
 
 Default installation is via [Composer](https://getcomposer.org/).
 
-```
+```bash
 composer require assada/laravel-achievements
 ```
 
@@ -45,13 +43,14 @@ The service provider will automatically get registered. Or you could add the Ser
 
 ```php
 'providers' => [
-    ...
+    //...
     Assada\Achievements\AchievementsServiceProvider::class,
+]
 ```
 
 Backup your database and run the migrations in order to setup the required tables on the database.
 
-```
+```bash
 php artisan migrate
 ```
 
@@ -60,7 +59,7 @@ Similar to Laravel's implementation of [Notifications](https://laravel.com/docs/
 represented by a single class (typically stored in the `app\Achievements` directory.) This directory will be created
 automatically for you when you run the `make:achievement` command.
 
-```
+```bash
 php artisan make:achievement UserMadeAPost
 ```
 This command will put a fresh Achievement in your `app/Achievements` directory with only has two properties defined:
@@ -79,12 +78,12 @@ class UserMadeAPost extends Achievement
     /*
      * The achievement name
      */
-    public $name = "Post Created";
+    public $name = 'Post Created';
 
     /*
      * A small description for the achievement
      */
-    public $description = "Congratulations! You have made your first post!";
+    public $description = 'Congratulations! You have made your first post!';
 }
 ```
 
@@ -108,7 +107,7 @@ This trait contains the `unlock` method, that can be used to unlock an Achieveme
 `Achievement` instance:
 
 ```php
-use App\Achievements\UserMadeAPost
+use App\Achievements\UserMadeAPost;
 
 $user->unlock(new UserMadeAPost());
 ```
@@ -134,12 +133,12 @@ class UserMade10Posts extends Achievement
     /*
      * The achievement name
      */
-    public $name = "10 Posts Created";
+    public $name = '10 Posts Created';
 
     /*
      * A small description for the achievement
      */
-    public $description = "Wow! You have already created 10 posts!";
+    public $description = 'Wow! You have already created 10 posts!';
 
     /*
      * The amount of "points" this user need to obtain in order to complete this achievement
@@ -220,12 +219,12 @@ class UserMade50Posts extends Achievement
     /*
      * The achievement name
      */
-    public $name = "50 Posts Created";
+    public $name = '50 Posts Created';
 
     /*
      * A small description for the achievement
      */
-    public $description = "Wow! You have already created 50 posts!";
+    public $description = 'Wow! You have already created 50 posts!';
 
     /*
      * The amount of "points" this user need to obtain in order to complete this achievement
