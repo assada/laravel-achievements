@@ -15,7 +15,7 @@ class DummyClass extends AchievementChain
     /*
      * Returns a list of instances of Achievements
      */
-    public function chain()
+    public function chain(): array
     {
         return [];
     }
