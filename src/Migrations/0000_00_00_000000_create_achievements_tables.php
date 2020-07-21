@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Schema;
  */
 class CreateAchievementsTables extends Migration
 {
-    public $achievement_details;
-    public $achievement_progress;
+    public $achievementDetailsTableName;
+    public $achievementProgressTableName;
 
     /**
      * CreateAchievementsTables constructor.
      */
     public function __construct()
     {
-        $this->achievement_details = Config::get('achievements.table_names.details');
-        $this->achievement_progress = Config::get('achievements.table_names.progress');
+        $this->achievementDetailsTableName = Config::get('achievements.table_names.details');
+        $this->achievementProgressTableName = Config::get('achievements.table_names.progress');
     }
 
     /**
@@ -31,7 +31,7 @@ class CreateAchievementsTables extends Migration
     public function up(): void
     {
         Schema::create(
-            $this->achievement_details,
+            $this->achievementDetailsTableName,
             static function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
@@ -43,8 +43,8 @@ class CreateAchievementsTables extends Migration
             }
         );
         Schema::create(
-            $this->achievement_progress,
-            static function (Blueprint $table) {
+            $this->achievementProgressTableName,
+            function (Blueprint $table) {
                 $table->uuid('id')->primary();
                 $table->unsignedInteger('achievement_id');
                 $table->morphs('achiever');
@@ -52,7 +52,7 @@ class CreateAchievementsTables extends Migration
                 $table->timestamp('unlocked_at')->nullable()->default(null);
                 $table->timestamps();
 
-                $table->foreign('achievement_id')->references('id')->on('achievement_details');
+                $table->foreign('achievement_id')->references('id')->on($this->achievementDetailsTableName);
             }
         );
     }
@@ -64,7 +64,7 @@ class CreateAchievementsTables extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievement_progress');
-        Schema::dropIfExists('achievement_details');
+        Schema::dropIfExists($this->achievementProgressTableName);
+        Schema::dropIfExists($this->achievementDetailsTableName);
     }
 }
