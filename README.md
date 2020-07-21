@@ -28,7 +28,7 @@ An implementation of an Achievement System in Laravel, inspired by Laravel's Not
 
 ## Versions and branches
 - v1.* - Original `Gstt\*` namespace with supporting Laravel 6 and PHP7.2 (only fix and security updates)
-- v2.* (master) - New namespace `Assada\*` with supporting Laravel 6 and PHP7.2 (fixes, security and feature updates)
+- v2.* (master) - New namespace `Assada\*` with supporting Laravel >=6 and PHP7.2 (fixes, security and feature updates)
 
 ## <a name="installation"></a> Installation
 
