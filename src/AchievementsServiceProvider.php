@@ -43,7 +43,7 @@ class AchievementsServiceProvider extends ServiceProvider
         );
         $this->publishes(
             [
-                __DIR__ . '/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path('migrations')
+                __DIR__ . '/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path('migrations') . '/000_00_00_000000_create_achievements_tables.php'
             ],
             'migrations'
         );
