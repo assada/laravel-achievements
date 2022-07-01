@@ -33,7 +33,7 @@ class CreateAchievementsTables extends Migration
         Schema::create(
             $this->achievementDetailsTableName,
             static function (Blueprint $table) {
-                $table->increments('id');
+                $table->id();
                 $table->string('name');
                 $table->string('description');
                 $table->unsignedInteger('points')->default(1);

@@ -22,7 +22,7 @@ trait EntityRelationsAchievements
      */
     public function achievements(): MorphMany
     {
-        if (config('achievements.locked_sync')) {
+        if (config('achievements.locked_sync') && !empty($this->id)) {
             $this->syncAchievements();
         }
         return $this->morphMany(AchievementProgress::class, 'achiever')
