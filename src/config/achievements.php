@@ -26,6 +26,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Load migration
+    |--------------------------------------------------------------------------
+    |
+    | Controls if the migration file should be automatically loaded.
+    |
+    | When set to TRUE, the migrations are autoloaded into the migration's folder.
+    | If you would like to update your file or store the migration file from a different
+    | path you should set this to FALSE.
+    |
+    */
+    'load_migrations' => true,
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Locked achievement sync
     |--------------------------------------------------------------------------
     |

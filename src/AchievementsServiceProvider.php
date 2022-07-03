@@ -22,7 +22,6 @@ class AchievementsServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->loadMigrationsFrom(__DIR__ . '/Migrations');
         if ($this->app->runningInConsole()) {
             $this->commands(
                 [
@@ -31,23 +30,30 @@ class AchievementsServiceProvider extends ServiceProvider
                     LoadAchievementsCommand::class
                 ]
             );
+            $this->publishes(
+                [
+                    __DIR__.'/config/achievements.php' => config_path('achievements.php'),
+                ],
+                'config'
+            );
+            $this->publishes(
+                [
+                    __DIR__.'/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path('migrations/000_00_00_000000_create_achievements_tables.php')
+                ],
+                'migrations'
+            );
+
+            if (config('achievements.load_migrations', true)) {
+                $this->loadMigrationsFrom(__DIR__ . '/Migrations');
+            }
         }
+
         $this->app[Achievement::class] = static function ($app) {
             return $app['gstt.achievements.achievement'];
         };
-        $this->publishes(
-            [
-                __DIR__ . '/config/achievements.php' => config_path('achievements.php'),
-            ],
-            'config'
-        );
-        $this->publishes(
-            [
-                __DIR__ . '/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path('migrations/000_00_00_000000_create_achievements_tables.php')
-            ],
-            'migrations'
-        );
-        $this->mergeConfigFrom(__DIR__ . '/config/achievements.php', 'achievements');
+
+
+        $this->mergeConfigFrom(__DIR__.'/config/achievements.php', 'achievements');
     }
 
     /**
