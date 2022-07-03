@@ -42,13 +42,16 @@ class AchievementsServiceProvider extends ServiceProvider
                 ],
                 'migrations'
             );
+
+            if (config('achievements.load_migrations', true)) {
+                $this->loadMigrationsFrom(__DIR__ . '/Migrations');
+            }
         }
 
         $this->app[Achievement::class] = static function ($app) {
             return $app['gstt.achievements.achievement'];
         };
 
-        $this->loadMigrationsFrom(__DIR__ . '/Migrations');
 
         $this->mergeConfigFrom(__DIR__.'/config/achievements.php', 'achievements');
     }
