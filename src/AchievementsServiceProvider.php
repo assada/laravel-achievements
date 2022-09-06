@@ -41,9 +41,12 @@ class AchievementsServiceProvider extends ServiceProvider
             ],
             'config'
         );
+        
+        $filename = sprintf('migrations/%s_create_achievements_tables.php', now()->format('Y_M_d_His'));
+        
         $this->publishes(
             [
-                __DIR__ . '/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path('migrations/000_00_00_000000_create_achievements_tables.php')
+                __DIR__ . '/Migrations/0000_00_00_000000_create_achievements_tables.php' => database_path($filename)
             ],
             'migrations'
         );
