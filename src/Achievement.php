@@ -143,7 +143,13 @@ abstract class Achievement implements CanAchieve
     {
         $progress = $this->getOrCreateProgressForAchiever($achiever);
 
-        if (!$progress->isUnlocked()) {
+        if (config('achievements.locked_achievements')
+            ?? $progress->isUnlocked()
+            ?? $progress->points < $points) {
+            $progress->unlocked_at = null;
+        }
+
+        if (!$progress->isUnlocked()){
             $progress->points = $points;
             $progress->save();
         }
