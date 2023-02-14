@@ -42,7 +42,7 @@ class AchievementsServiceProvider extends ServiceProvider
             'config'
         );
         
-        $filename = sprintf('migrations/%s_create_achievements_tables.php', now()->format('Y_M_d_His'));
+        $filename = sprintf('migrations/%s_create_achievements_tables.php', now()->format('Y_m_d_His'));
         
         $this->publishes(
             [
