@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Assada\Achievements\Console;
@@ -86,8 +87,9 @@ class LoadAchievementsCommand extends Command
         $bar = $this->output->createProgressBar(count($objects));
 
         foreach ($objects as $object) {
-            $model = $object->getModel();
-
+            if (is_subclass_of($object, 'Assada\Achievements\Achievement')) {
+                $model = $object->getModel();
+            }
             $bar->advance();
         }
 
@@ -102,9 +104,18 @@ class LoadAchievementsCommand extends Command
      */
     private function getNamespace($src): ?string
     {
-        if (preg_match('#^namespace\s+(.+?);$#sm', $src, $m)) {
+        if (preg_match('#^namespace\s+(.+?);$#sm', $this->sanetizeStringFile($src), $m)) {
             return $m[1];
         }
         return null;
+    }
+
+    /**
+     * @param $src
+     * @return string|null
+     */
+    private function sanetizeStringFile($src): string
+    {
+        return str_replace("\r\n", "\n", $src);
     }
 }
