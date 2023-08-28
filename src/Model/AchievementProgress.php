@@ -90,7 +90,7 @@ class AchievementProgress extends Model
      */
     public function isUnlocked(): bool
     {
-        if (!is_null($this->unlockedAt)) {
+        if (!is_null($this->unlocked_at)) {
             return true;
         }
         if ($this->points >= $this->details->points) {
@@ -124,7 +124,7 @@ class AchievementProgress extends Model
             $this->id = Uuid::uuid4()->toString();
         }
         $recentlyUnlocked = false;
-        if (is_null($this->unlockedAt) && $this->isUnlocked()) {
+        if (is_null($this->unlocked_at) && $this->isUnlocked()) {
             $recentlyUnlocked = true;
             $this->points = $this->details->points;
             $this->unlocked_at = Carbon::now();
