@@ -63,5 +63,16 @@ return [
     | This will keep your database in sync, but may also increase the amount
     | of database calls.
     */
-    'auto_sync' => false
+    'auto_sync' => false,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Locked Achievement
+    |--------------------------------------------------------------------------
+    |
+    | If set progress is less to unlock achievement, achievement locked.
+    | Locked - is set 'unlocked_at' = null.
+     */
+
+    'locked_achievements' => false
 ];
